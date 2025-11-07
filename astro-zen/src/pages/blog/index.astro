@@ -1,0 +1,55 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '@layouts/Layout.astro';
+import BlogCard from '@components/BlogCard.astro';
+import ScrollReveal from '@components/ScrollReveal.astro';
+
+const allBlogPosts = await getCollection('blog', ({ data }) => {
+  return !data.draft;
+});
+
+// Sort posts by publish date (newest first)
+const sortedPosts = allBlogPosts.sort(
+  (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
+);
+---
+
+<Layout>
+  <section class="py-24 md:py-32">
+    <ScrollReveal animation="fade">
+      <div class="mb-16">
+        <h1 class="mb-4 font-serif text-5xl font-bold tracking-tighter text-grey-900 md:text-6xl">
+          Blog
+        </h1>
+        <p class="text-lg text-grey-600">
+          Thoughts on development, design, and technology.
+        </p>
+      </div>
+    </ScrollReveal>
+
+    <div class="grid gap-8 md:gap-12">
+      {sortedPosts.map((post, index) => (
+        <ScrollReveal 
+          animation="slide-up" 
+          stagger={index} 
+          staggerDelay={100}
+        >
+          <BlogCard
+            title={post.data.title}
+            description={post.data.description}
+            publishDate={post.data.publishDate}
+            heroImage={post.data.heroImage}
+            tags={post.data.tags}
+            slug={post.slug}
+          />
+        </ScrollReveal>
+      ))}
+    </div>
+
+    {sortedPosts.length === 0 && (
+      <div class="text-center py-16">
+        <p class="text-grey-600 text-lg">No blog posts yet. Check back soon!</p>
+      </div>
+    )}
+  </section>
+</Layout>

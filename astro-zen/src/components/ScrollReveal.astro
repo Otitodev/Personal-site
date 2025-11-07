@@ -1,0 +1,54 @@
+---
+/**
+ * ScrollReveal Component
+ * 
+ * Wraps content with scroll reveal animation attributes.
+ * Provides a declarative way to add scroll animations to any content.
+ */
+
+export interface Props {
+  animation?: 'fade' | 'slide-up' | 'slide-down' | 'slide-left' | 'slide-right' | 'scale' | 'bounce';
+  delay?: number;
+  stagger?: number;
+  staggerDelay?: number;
+  threshold?: number;
+  margin?: string;
+  once?: boolean;
+  class?: string;
+  tag?: keyof HTMLElementTagMap;
+}
+
+const {
+  animation = 'fade',
+  delay = 0,
+  stagger,
+  staggerDelay = 100,
+  threshold = 0.1,
+  margin = '0px 0px -50px 0px',
+  once = true,
+  class: className = '',
+  tag: Tag = 'div'
+} = Astro.props;
+
+// Build data attributes for the scroll reveal system
+const dataAttributes = {
+  'data-scroll-reveal': animation,
+  'data-scroll-delay': delay.toString(),
+  'data-scroll-threshold': threshold.toString(),
+  'data-scroll-margin': margin,
+  'data-scroll-once': once.toString(),
+  ...(stagger !== undefined && { 'data-scroll-stagger': stagger.toString() }),
+  ...(staggerDelay && { 'data-scroll-stagger-delay': staggerDelay.toString() })
+};
+---
+
+<Tag class={className} {...dataAttributes}>
+  <slot />
+</Tag>
+
+<style>
+  /* Ensure the component doesn't interfere with animations */
+  :global([data-scroll-reveal]) {
+    /* Animation styles are handled in global.css */
+  }
+</style>

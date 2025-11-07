@@ -1,0 +1,381 @@
+---
+// Animation Performance Test Page
+// This page provides a testing environment for animation performance benchmarks
+---
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animation Performance Tests - Astro Zen</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+      min-height: 100vh;
+    }
+    
+    .test-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    
+    .header h1 {
+      color: #1f2937;
+      margin-bottom: 8px;
+    }
+    
+    .header p {
+      color: #6b7280;
+      margin: 0;
+    }
+    
+    .controls {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+    
+    .btn {
+      background: #3b82f6;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+    
+    .btn:hover {
+      background: #2563eb;
+      transform: translateY(-1px);
+    }
+    
+    .btn:disabled {
+      background: #9ca3af;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .btn.secondary {
+      background: #6b7280;
+    }
+    
+    .btn.secondary:hover {
+      background: #4b5563;
+    }
+    
+    .status {
+      text-align: center;
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 24px;
+      font-weight: 500;
+    }
+    
+    .status.running {
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fbbf24;
+    }
+    
+    .status.success {
+      background: #d1fae5;
+      color: #065f46;
+      border: 1px solid #10b981;
+    }
+    
+    .status.error {
+      background: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #ef4444;
+    }
+    
+    .status.hidden {
+      display: none;
+    }
+    
+    .info-section {
+      background: #f8fafc;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+    
+    .info-section h3 {
+      margin-top: 0;
+      color: #1f2937;
+    }
+    
+    .info-section ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+    
+    .info-section li {
+      margin-bottom: 8px;
+      color: #4b5563;
+    }
+    
+    .progress {
+      width: 100%;
+      height: 8px;
+      background: #e5e7eb;
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 16px 0;
+    }
+    
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+    
+    .demo-animations {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+    
+    .demo-element {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(45deg, #3b82f6, #1d4ed8);
+      border-radius: 12px;
+      margin: 0 auto;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .demo-element:hover {
+      transform: scale(1.1) rotate(5deg);
+      box-shadow: 0 8px 16px rgba(59, 130, 246, 0.3);
+    }
+    
+    @keyframes pulse-demo {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.8; }
+    }
+    
+    .demo-element.animated {
+      animation: pulse-demo 2s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body>
+  <div class="test-container">
+    <div class="header">
+      <h1>🚀 Animation Performance Tests</h1>
+      <p>Test and benchmark animation performance for the enhanced site experience</p>
+    </div>
+    
+    <div class="controls">
+      <button id="runTests" class="btn">Run All Tests</button>
+      <button id="runSingle" class="btn secondary">Run Single Test</button>
+      <button id="clearResults" class="btn secondary">Clear Results</button>
+    </div>
+    
+    <div id="status" class="status hidden"></div>
+    
+    <div class="progress">
+      <div id="progressBar" class="progress-bar"></div>
+    </div>
+    
+    <div class="info-section">
+      <h3>📊 What These Tests Measure</h3>
+      <ul>
+        <li><strong>Frame Rate:</strong> Ensures animations maintain ≥60 FPS for smooth performance</li>
+        <li><strong>CSS Transitions:</strong> Tests simple property transitions (transform, opacity)</li>
+        <li><strong>Complex Animations:</strong> Tests multi-property keyframe animations</li>
+        <li><strong>Scroll Reveals:</strong> Tests intersection observer-based animations</li>
+        <li><strong>Interactive Hovers:</strong> Tests rapid hover state changes</li>
+        <li><strong>Page Transitions:</strong> Tests navigation animation performance</li>
+      </ul>
+    </div>
+    
+    <div class="info-section">
+      <h3>🎯 Performance Requirements</h3>
+      <ul>
+        <li>Minimum 55-58 FPS for different animation types</li>
+        <li>Maximum 16.67ms average frame time for 60 FPS</li>
+        <li>Minimal dropped frames during complex animations</li>
+        <li>Consistent performance across different element counts</li>
+      </ul>
+    </div>
+    
+    <div class="info-section">
+      <h3>🎮 Demo Animations</h3>
+      <p>Hover over the elements below to see interactive animations in action:</p>
+      <div class="demo-animations">
+        <div class="demo-element" data-scroll-reveal="fade"></div>
+        <div class="demo-element" data-scroll-reveal="slide"></div>
+        <div class="demo-element" data-scroll-reveal="scale"></div>
+        <div class="demo-element animated"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Import and initialize animation performance tests
+    import { runManualTests } from '@/tests/test-runner';
+    import { initScrollReveal, initInteractiveAnimations } from '@lib/animations';
+    
+    // Initialize animation systems
+    initScrollReveal();
+    initInteractiveAnimations();
+    
+    // Test control elements
+    const runTestsBtn = document.getElementById('runTests');
+    const runSingleBtn = document.getElementById('runSingle');
+    const clearResultsBtn = document.getElementById('clearResults');
+    const statusDiv = document.getElementById('status');
+    const progressBar = document.getElementById('progressBar');
+    
+    let isRunning = false;
+    
+    // Update status display
+    function updateStatus(message, type = 'running') {
+      statusDiv.textContent = message;
+      statusDiv.className = `status ${type}`;
+    }
+    
+    // Update progress bar
+    function updateProgress(percent) {
+      progressBar.style.width = `${percent}%`;
+    }
+    
+    // Run all performance tests
+    runTestsBtn.addEventListener('click', async () => {
+      if (isRunning) return;
+      
+      isRunning = true;
+      runTestsBtn.disabled = true;
+      runSingleBtn.disabled = true;
+      
+      try {
+        updateStatus('🔄 Running animation performance tests...', 'running');
+        updateProgress(0);
+        
+        // Simulate progress updates
+        const progressInterval = setInterval(() => {
+          const currentWidth = parseFloat(progressBar.style.width) || 0;
+          if (currentWidth < 90) {
+            updateProgress(currentWidth + 10);
+          }
+        }, 500);
+        
+        const results = await runManualTests();
+        
+        clearInterval(progressInterval);
+        updateProgress(100);
+        
+        if (results.overallPassed) {
+          updateStatus(`✅ All tests passed! Average FPS: ${results.summary.averageFps}`, 'success');
+        } else {
+          updateStatus(`❌ ${results.summary.failedTests} tests failed. Check console for details.`, 'error');
+        }
+        
+      } catch (error) {
+        updateStatus(`❌ Test execution failed: ${error.message}`, 'error');
+        console.error('Animation performance test error:', error);
+      } finally {
+        isRunning = false;
+        runTestsBtn.disabled = false;
+        runSingleBtn.disabled = false;
+      }
+    });
+    
+    // Run single test (for development)
+    runSingleBtn.addEventListener('click', async () => {
+      if (isRunning) return;
+      
+      updateStatus('🔄 Running single test benchmark...', 'running');
+      
+      // Import test utilities for manual testing
+      const { AnimationPerformanceTests } = await import('@/tests/animation-performance.test');
+      const testSuite = new AnimationPerformanceTests();
+      
+      try {
+        // Run just the first benchmark as an example
+        const result = await testSuite.runBenchmark({
+          name: 'Quick CSS Transition Test',
+          expectedMinFps: 55,
+          setup: () => {
+            const testEl = document.createElement('div');
+            testEl.style.cssText = `
+              width: 50px; height: 50px; background: #3b82f6;
+              position: fixed; top: 50%; left: 50%;
+              transform: translate(-50%, -50%);
+              transition: all 0.5s ease;
+            `;
+            testEl.id = 'quick-test-element';
+            document.body.appendChild(testEl);
+          },
+          animate: async () => {
+            const el = document.getElementById('quick-test-element');
+            if (el) {
+              el.style.transform = 'translate(-50%, -50%) scale(2) rotate(180deg)';
+              await new Promise(resolve => setTimeout(resolve, 600));
+            }
+          },
+          cleanup: () => {
+            const el = document.getElementById('quick-test-element');
+            if (el) el.remove();
+          }
+        });
+        
+        if (result.passed) {
+          updateStatus(`✅ Quick test passed! FPS: ${result.metrics.frameRate}`, 'success');
+        } else {
+          updateStatus(`❌ Quick test failed. FPS: ${result.metrics.frameRate}`, 'error');
+        }
+        
+      } catch (error) {
+        updateStatus(`❌ Single test failed: ${error.message}`, 'error');
+      }
+    });
+    
+    // Clear results
+    clearResultsBtn.addEventListener('click', () => {
+      updateStatus('', 'hidden');
+      updateProgress(0);
+      
+      // Remove any existing test reports
+      const existingReport = document.getElementById('animation-test-report');
+      if (existingReport) {
+        existingReport.remove();
+      }
+    });
+    
+    // Initialize demo animations
+    document.addEventListener('DOMContentLoaded', () => {
+      const demoElements = document.querySelectorAll('.demo-element');
+      demoElements.forEach((el, index) => {
+        el.addEventListener('click', () => {
+          el.style.animation = 'none';
+          setTimeout(() => {
+            el.style.animation = 'pulse-demo 1s ease-in-out';
+          }, 10);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

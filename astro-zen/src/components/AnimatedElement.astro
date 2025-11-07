@@ -1,0 +1,37 @@
+---
+/**
+ * AnimatedElement Component
+ * Wrapper component for adding interactive animations to elements
+ */
+
+export interface Props {
+  animation?: 'btn' | 'card' | 'link' | 'icon' | 'image' | 'glow' | 'none';
+  class?: string;
+  tag?: keyof HTMLElementTagNameMap;
+  href?: string;
+  target?: string;
+  rel?: string;
+}
+
+const {
+  animation = 'none',
+  class: className = '',
+  tag = 'div',
+  href,
+  target,
+  rel
+} = Astro.props;
+
+const Tag = href ? 'a' : tag;
+const animationClass = animation !== 'none' ? `${animation}-animated` : '';
+const combinedClass = [className, animationClass].filter(Boolean).join(' ');
+
+const linkProps = href ? { href, target, rel } : {};
+---
+
+<Tag
+  class={combinedClass}
+  {...linkProps}
+>
+  <slot />
+</Tag>

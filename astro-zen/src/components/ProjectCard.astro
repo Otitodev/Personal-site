@@ -1,0 +1,122 @@
+---
+import ExternalIcon from '@icons/ExternalIcon.astro';
+import GithubIcon from '@icons/GithubIcon.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  heroImage: string;
+  technologies: string[];
+  liveUrl?: string;
+  githubUrl?: string;
+  status: 'completed' | 'in-progress' | 'planned';
+  slug: string;
+  featured: boolean;
+}
+
+const { title, description, heroImage, technologies, liveUrl, githubUrl, status, slug, featured } = Astro.props;
+
+const statusColors = {
+  completed: 'bg-green-500/20 text-green-400',
+  'in-progress': 'bg-yellow-500/20 text-yellow-400',
+  planned: 'bg-blue-500/20 text-blue-400'
+};
+
+const statusLabels = {
+  completed: 'Completed',
+  'in-progress': 'In Progress',
+  planned: 'Planned'
+};
+---
+
+<article class="group relative">
+  {featured && (
+    <div class="absolute -top-2 -right-2 z-10">
+      <span class="bg-blue-600 text-white text-xs px-2 py-1 rounded-full font-medium">
+        Featured
+      </span>
+    </div>
+  )}
+  
+  <div class="overflow-hidden rounded-lg border border-grey-200 bg-white shadow-sm transition-all duration-300 group-hover:border-grey-300 group-hover:shadow-md">
+    <a href={`/projects/${slug}`} class="block">
+      <div class="overflow-hidden">
+        <img 
+          src={heroImage} 
+          alt={title}
+          class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+        />
+      </div>
+    </a>
+    
+    <div class="p-6 space-y-4">
+      <div class="flex items-center justify-between">
+        <span class={`px-2 py-1 rounded text-xs font-medium ${statusColors[status]}`}>
+          {statusLabels[status]}
+        </span>
+        
+        <div class="flex items-center gap-2">
+          {liveUrl && (
+            <a 
+              href={liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="p-2 text-grey-500 hover:text-blue-600 transition-colors"
+              title="Live Demo"
+            >
+              <ExternalIcon class="w-4 h-4" />
+            </a>
+          )}
+          
+          {githubUrl && (
+            <a 
+              href={githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="p-2 text-grey-500 hover:text-blue-600 transition-colors"
+              title="Source Code"
+            >
+              <GithubIcon class="w-4 h-4" />
+            </a>
+          )}
+        </div>
+      </div>
+      
+      <div>
+        <a href={`/projects/${slug}`}>
+          <h3 class="font-serif text-xl font-bold text-grey-900 group-hover:text-blue-600 transition-colors mb-2">
+            {title}
+          </h3>
+        </a>
+        
+        <p class="text-grey-600 text-sm leading-relaxed">
+          {description}
+        </p>
+      </div>
+      
+      {technologies.length > 0 && (
+        <div class="flex flex-wrap gap-2">
+          {technologies.slice(0, 4).map((tech) => (
+            <span class="px-2 py-1 bg-grey-100 text-grey-600 rounded text-xs">
+              {tech}
+            </span>
+          ))}
+          {technologies.length > 4 && (
+            <span class="px-2 py-1 bg-grey-100 text-grey-600 rounded text-xs">
+              +{technologies.length - 4} more
+            </span>
+          )}
+        </div>
+      )}
+      
+      <div class="pt-2">
+        <a 
+          href={`/projects/${slug}`}
+          class="text-sm text-blue-600 group-hover:underline"
+        >
+          View Details →
+        </a>
+      </div>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,124 @@
+---
+import Layout from '@layouts/Layout.astro';
+import ScrollReveal from '@components/ScrollReveal.astro';
+---
+
+<Layout>
+  <section class="py-24 md:py-32">
+    <ScrollReveal animation="fade">
+      <div class="mb-16 text-center">
+        <h1 class="mb-4 font-serif text-5xl font-bold tracking-tighter text-grey-900 md:text-6xl">
+          Scroll Animation Demo
+        </h1>
+        <p class="text-lg text-grey-600">
+          Scroll down to see the animations in action.
+        </p>
+      </div>
+    </ScrollReveal>
+
+    <div class="space-y-16">
+      <!-- Fade Animation -->
+      <ScrollReveal animation="fade" delay={200}>
+        <div class="rounded-lg bg-grey-50 p-8 text-center">
+          <h2 class="mb-4 font-serif text-3xl font-bold text-grey-900">Fade Animation</h2>
+          <p class="text-grey-600">This element fades in as you scroll.</p>
+        </div>
+      </ScrollReveal>
+
+      <!-- Slide Up Animation -->
+      <ScrollReveal animation="slide-up" delay={300}>
+        <div class="rounded-lg bg-blue-50 p-8 text-center">
+          <h2 class="mb-4 font-serif text-3xl font-bold text-blue-900">Slide Up Animation</h2>
+          <p class="text-blue-700">This element slides up from below.</p>
+        </div>
+      </ScrollReveal>
+
+      <!-- Slide Left Animation -->
+      <ScrollReveal animation="slide-left" delay={400}>
+        <div class="rounded-lg bg-grey-100 p-8 text-center">
+          <h2 class="mb-4 font-serif text-3xl font-bold text-grey-900">Slide Left Animation</h2>
+          <p class="text-grey-600">This element slides in from the right.</p>
+        </div>
+      </ScrollReveal>
+
+      <!-- Scale Animation -->
+      <ScrollReveal animation="scale" delay={500}>
+        <div class="rounded-lg bg-blue-100 p-8 text-center">
+          <h2 class="mb-4 font-serif text-3xl font-bold text-blue-900">Scale Animation</h2>
+          <p class="text-blue-700">This element scales up as it appears.</p>
+        </div>
+      </ScrollReveal>
+
+      <!-- Staggered Grid -->
+      <div class="mb-8">
+        <ScrollReveal animation="fade" delay={100}>
+          <h2 class="mb-8 text-center font-serif text-3xl font-bold text-grey-900">
+            Staggered Grid Animation
+          </h2>
+        </ScrollReveal>
+        
+        <div class="grid gap-6 md:grid-cols-3">
+          {[1, 2, 3, 4, 5, 6].map((item, index) => (
+            <ScrollReveal 
+              animation="slide-up" 
+              stagger={index} 
+              staggerDelay={100}
+            >
+              <div class="card-animated rounded-lg bg-white p-6 shadow-md border border-grey-200">
+                <h3 class="mb-2 font-serif text-xl font-bold text-grey-900">
+                  Card {item}
+                </h3>
+                <p class="text-grey-600">
+                  This card animates with a staggered delay.
+                </p>
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
+      </div>
+
+      <!-- Bounce Animation -->
+      <ScrollReveal animation="bounce" delay={200}>
+        <div class="rounded-lg bg-blue-600 p-8 text-center text-white">
+          <h2 class="mb-4 font-serif text-3xl font-bold">Bounce Animation</h2>
+          <p>This element bounces in with a playful effect.</p>
+        </div>
+      </ScrollReveal>
+
+      <!-- Interactive Elements -->
+      <ScrollReveal animation="fade" delay={300}>
+        <div class="rounded-lg bg-grey-50 p-8">
+          <h2 class="mb-6 text-center font-serif text-3xl font-bold text-grey-900">
+            Interactive Elements
+          </h2>
+          
+          <div class="flex flex-wrap justify-center gap-4">
+            <button class="btn-animated rounded-lg bg-blue-600 px-6 py-3 text-white hover:bg-blue-700">
+              Animated Button
+            </button>
+            
+            <a href="#" class="link-animated text-blue-600 hover:text-blue-700">
+              Animated Link
+            </a>
+            
+            <div class="icon-animated cursor-pointer rounded-full bg-grey-200 p-3">
+              <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </ScrollReveal>
+
+      <!-- Final Section -->
+      <ScrollReveal animation="fade" delay={400}>
+        <div class="rounded-lg bg-grey-900 p-8 text-center text-white">
+          <h2 class="mb-4 font-serif text-3xl font-bold">That's All!</h2>
+          <p class="text-grey-300">
+            You've seen all the scroll reveal animations in action.
+          </p>
+        </div>
+      </ScrollReveal>
+    </div>
+  </section>
+</Layout>

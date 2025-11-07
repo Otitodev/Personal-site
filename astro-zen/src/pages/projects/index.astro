@@ -1,0 +1,76 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '@layouts/Layout.astro';
+import ProjectCard from '@components/ProjectCard.astro';
+
+const allProjects = await getCollection('projects');
+
+// Sort projects by publish date (newest first) and separate featured
+const sortedProjects = allProjects.sort(
+  (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
+);
+
+const featuredProjects = sortedProjects.filter(project => project.data.featured);
+const otherProjects = sortedProjects.filter(project => !project.data.featured);
+---
+
+<Layout>
+  <section class="py-24 md:py-32">
+    <div class="mb-16">
+      <h1 class="mb-4 font-serif text-5xl font-bold tracking-tighter text-grey-900 md:text-6xl">
+        Projects
+      </h1>
+      <p class="text-lg text-grey-600">
+        A collection of my work, experiments, and side projects.
+      </p>
+    </div>
+
+    {featuredProjects.length > 0 && (
+      <div class="mb-16">
+        <h2 class="mb-8 font-serif text-3xl font-bold text-grey-900">Featured Projects</h2>
+        <div class="grid gap-8 md:grid-cols-2 lg:gap-12">
+          {featuredProjects.map((project) => (
+            <ProjectCard
+              title={project.data.title}
+              description={project.data.description}
+              heroImage={project.data.heroImage}
+              technologies={project.data.technologies}
+              liveUrl={project.data.liveUrl}
+              githubUrl={project.data.githubUrl}
+              status={project.data.status}
+              slug={project.slug}
+              featured={true}
+            />
+          ))}
+        </div>
+      </div>
+    )}
+
+    {otherProjects.length > 0 && (
+      <div>
+        <h2 class="mb-8 font-serif text-3xl font-bold text-grey-900">All Projects</h2>
+        <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-12">
+          {otherProjects.map((project) => (
+            <ProjectCard
+              title={project.data.title}
+              description={project.data.description}
+              heroImage={project.data.heroImage}
+              technologies={project.data.technologies}
+              liveUrl={project.data.liveUrl}
+              githubUrl={project.data.githubUrl}
+              status={project.data.status}
+              slug={project.slug}
+              featured={false}
+            />
+          ))}
+        </div>
+      </div>
+    )}
+
+    {allProjects.length === 0 && (
+      <div class="text-center py-16">
+        <p class="text-grey-600 text-lg">No projects yet. Check back soon!</p>
+      </div>
+    )}
+  </section>
+</Layout>

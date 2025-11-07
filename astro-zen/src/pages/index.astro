@@ -1,0 +1,25 @@
+---
+import { SITE_CONTENT } from "@config";
+import Hero from "@components/Hero.astro";
+import Layout from "@layouts/Layout.astro";
+import Experience from "@components/Experience.astro";
+import Projects from "@components/Projects.astro";
+import About from "@components/About.astro";
+import ScrollReveal from "@components/ScrollReveal.astro";
+---
+
+<Layout>
+  <Hero {...SITE_CONTENT.hero} />
+  
+  <ScrollReveal animation="fade" delay={200}>
+    <Experience experience={SITE_CONTENT.experience} />
+  </ScrollReveal>
+  
+  <ScrollReveal animation="slide-up" delay={300}>
+    <Projects projects={SITE_CONTENT.projects} />
+  </ScrollReveal>
+  
+  <ScrollReveal animation="fade" delay={400}>
+    <About {...SITE_CONTENT.about} name={SITE_CONTENT.hero.name} />
+  </ScrollReveal>
+</Layout>

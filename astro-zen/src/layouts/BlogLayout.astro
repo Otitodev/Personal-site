@@ -1,0 +1,103 @@
+---
+import { formatDate } from '@lib/utils';
+
+interface Props {
+  title: string;
+  description: string;
+  publishDate: Date;
+  updatedDate?: Date;
+  heroImage?: string;
+  tags: string[];
+}
+
+const { title, description, publishDate, updatedDate, heroImage, tags } = Astro.props;
+---
+
+<article class="py-24 md:py-32">
+  <!-- Back to blog link -->
+  <div class="mb-8">
+    <a 
+      href="/blog" 
+      class="inline-flex items-center text-sm text-grey-600 hover:text-blue-600 transition-colors"
+    >
+      ← Back to Blog
+    </a>
+  </div>
+
+  <!-- Hero Image -->
+  {heroImage && (
+    <div class="mb-8 overflow-hidden rounded-lg">
+      <img 
+        src={heroImage} 
+        alt={title}
+        class="w-full h-64 md:h-80 object-cover"
+      />
+    </div>
+  )}
+
+  <!-- Article Header -->
+  <header class="mb-12">
+    <h1 class="mb-4 font-serif text-4xl font-bold tracking-tighter text-grey-900 md:text-5xl lg:text-6xl">
+      {title}
+    </h1>
+    
+    <p class="mb-6 text-lg text-grey-600 leading-relaxed">
+      {description}
+    </p>
+
+    <div class="flex flex-wrap items-center gap-4 text-sm text-grey-500">
+      <time datetime={publishDate.toISOString()}>
+        {formatDate(publishDate)}
+      </time>
+      
+      {updatedDate && (
+        <>
+          <span>•</span>
+          <span>Updated {formatDate(updatedDate)}</span>
+        </>
+      )}
+      
+      {tags.length > 0 && (
+        <>
+          <span>•</span>
+          <div class="flex flex-wrap gap-2">
+            {tags.map((tag) => (
+              <span class="px-2 py-1 bg-grey-100 text-grey-600 rounded text-xs">
+                #{tag}
+              </span>
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  </header>
+
+  <!-- Article Content -->
+  <div class="prose prose-lg max-w-none">
+    <slot />
+  </div>
+
+  <!-- Article Footer -->
+  <footer class="mt-16 pt-8 border-t border-grey-200">
+    <div class="flex items-center justify-between">
+      <a 
+        href="/blog" 
+        class="inline-flex items-center text-sm text-grey-600 hover:text-blue-600 transition-colors"
+      >
+        ← Back to Blog
+      </a>
+      
+      <div class="flex items-center gap-4">
+        <span class="text-sm text-grey-500">Share:</span>
+        <a 
+          href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(Astro.url.href)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-sm text-grey-600 hover:text-blue-600 transition-colors"
+        >
+          Twitter
+        </a>
+      </div>
+    </div>
+  </footer>
+</article>
