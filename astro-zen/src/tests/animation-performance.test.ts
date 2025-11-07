@@ -4,7 +4,7 @@
  * Requirements: 1.5 - Animation_System SHALL maintain performance with animation frame rates above 60fps
  */
 
-import { PageTransitions, ScrollReveal, InteractiveAnimations } from '@lib/animations';
+import { ScrollReveal } from '@lib/animations';
 
 interface PerformanceMetrics {
   frameRate: number;

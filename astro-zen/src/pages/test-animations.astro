@@ -242,32 +242,36 @@
     initInteractiveAnimations();
     
     // Test control elements
-    const runTestsBtn = document.getElementById('runTests');
-    const runSingleBtn = document.getElementById('runSingle');
-    const clearResultsBtn = document.getElementById('clearResults');
-    const statusDiv = document.getElementById('status');
-    const progressBar = document.getElementById('progressBar');
+    const runTestsBtn = document.getElementById('runTests') as HTMLButtonElement | null;
+    const runSingleBtn = document.getElementById('runSingle') as HTMLButtonElement | null;
+    const clearResultsBtn = document.getElementById('clearResults') as HTMLButtonElement | null;
+    const statusDiv = document.getElementById('status') as HTMLDivElement | null;
+    const progressBar = document.getElementById('progressBar') as HTMLDivElement | null;
     
     let isRunning = false;
     
     // Update status display
-    function updateStatus(message, type = 'running') {
-      statusDiv.textContent = message;
-      statusDiv.className = `status ${type}`;
+    function updateStatus(message: string, type: string = 'running') {
+      if (statusDiv) {
+        statusDiv.textContent = message;
+        statusDiv.className = `status ${type}`;
+      }
     }
     
     // Update progress bar
-    function updateProgress(percent) {
-      progressBar.style.width = `${percent}%`;
+    function updateProgress(percent: number) {
+      if (progressBar) {
+        progressBar.style.width = `${percent}%`;
+      }
     }
     
     // Run all performance tests
-    runTestsBtn.addEventListener('click', async () => {
+    runTestsBtn?.addEventListener('click', async () => {
       if (isRunning) return;
       
       isRunning = true;
-      runTestsBtn.disabled = true;
-      runSingleBtn.disabled = true;
+      if (runTestsBtn) runTestsBtn.disabled = true;
+      if (runSingleBtn) runSingleBtn.disabled = true;
       
       try {
         updateStatus('🔄 Running animation performance tests...', 'running');
@@ -275,9 +279,11 @@
         
         // Simulate progress updates
         const progressInterval = setInterval(() => {
-          const currentWidth = parseFloat(progressBar.style.width) || 0;
-          if (currentWidth < 90) {
-            updateProgress(currentWidth + 10);
+          if (progressBar) {
+            const currentWidth = parseFloat(progressBar.style.width) || 0;
+            if (currentWidth < 90) {
+              updateProgress(currentWidth + 10);
+            }
           }
         }, 500);
         
@@ -293,17 +299,18 @@
         }
         
       } catch (error) {
-        updateStatus(`❌ Test execution failed: ${error.message}`, 'error');
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        updateStatus(`❌ Test execution failed: ${errorMessage}`, 'error');
         console.error('Animation performance test error:', error);
       } finally {
         isRunning = false;
-        runTestsBtn.disabled = false;
-        runSingleBtn.disabled = false;
+        if (runTestsBtn) runTestsBtn.disabled = false;
+        if (runSingleBtn) runSingleBtn.disabled = false;
       }
     });
     
     // Run single test (for development)
-    runSingleBtn.addEventListener('click', async () => {
+    runSingleBtn?.addEventListener('click', async () => {
       if (isRunning) return;
       
       updateStatus('🔄 Running single test benchmark...', 'running');
@@ -348,12 +355,13 @@
         }
         
       } catch (error) {
-        updateStatus(`❌ Single test failed: ${error.message}`, 'error');
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        updateStatus(`❌ Single test failed: ${errorMessage}`, 'error');
       }
     });
     
     // Clear results
-    clearResultsBtn.addEventListener('click', () => {
+    clearResultsBtn?.addEventListener('click', () => {
       updateStatus('', 'hidden');
       updateProgress(0);
       
@@ -366,8 +374,8 @@
     
     // Initialize demo animations
     document.addEventListener('DOMContentLoaded', () => {
-      const demoElements = document.querySelectorAll('.demo-element');
-      demoElements.forEach((el, index) => {
+      const demoElements = document.querySelectorAll<HTMLElement>('.demo-element');
+      demoElements.forEach((el) => {
         el.addEventListener('click', () => {
           el.style.animation = 'none';
           setTimeout(() => {

@@ -161,7 +161,7 @@ export class ProductionPerformanceMonitor {
  * Simple decorator for monitoring animation performance
  */
 export function monitorAnimation(animationType?: string) {
-  return function (target: any, propertyName: string, descriptor: PropertyDescriptor) {
+  return function (_target: any, propertyName: string, descriptor: PropertyDescriptor) {
     const method = descriptor.value;
 
     descriptor.value = async function (...args: any[]) {

@@ -6,8 +6,7 @@
  * Can be used for CI/CD pipelines or automated testing
  */
 
-const { execSync } = require('child_process');
-const { readFileSync, writeFileSync } = require('fs');
+const { writeFileSync } = require('fs');
 const { join } = require('path');
 
 const projectRoot = join(__dirname, '..');
