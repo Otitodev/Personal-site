@@ -1,0 +1,33 @@
+---
+/**
+ * ThemeImage Component
+ * An image component that can influence the site's theme colors
+ * 
+ * Props:
+ * - src: Image source URL
+ * - alt: Alt text for accessibility
+ * - enableTheme: Whether this image should influence the theme (default: false)
+ * - class: Additional CSS classes
+ * - All other standard img attributes
+ */
+
+interface Props {
+  src: string;
+  alt: string;
+  enableTheme?: boolean;
+  class?: string;
+  [key: string]: any;
+}
+
+const { src, alt, enableTheme = false, class: className = '', ...rest } = Astro.props;
+
+const themeAttr = enableTheme ? { 'data-theme-source': 'true' } : {};
+---
+
+<img
+  src={src}
+  alt={alt}
+  class={className}
+  {...themeAttr}
+  {...rest}
+/>

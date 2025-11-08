@@ -1,12 +1,12 @@
 import type { SiteConfig, SiteContent } from "../types";
 
 export const SITE_CONFIG: SiteConfig = {
-  title: "Alejandro Múnez — Mobile & Web Developer",
-  author: "Alejandro Múnez Cuntez",
+  title: "Otito Ogene — Backend & AI Automation Engineer",
+  author: "Otito Ogene",
   description:
-    "Software Engineer based in San Francisco, USA. I specialize in UI design, web and mobile application development and maintenance.",
+    "Backend & AI Automation Engineer specializing in scalable API systems, workflow automation, and healthcare-focused software solutions.",
   lang: "en",
-  siteLogo: "/alejandro-small.jpg",
+  siteLogo: "/otito-small.png",
   navLinks: [
     { text: "Experience", href: "#experience" },
     { text: "Projects", href: "/projects" },
@@ -14,86 +14,94 @@ export const SITE_CONFIG: SiteConfig = {
     { text: "About", href: "#about" },
   ],
   socialLinks: [
-    { text: "Twitter", href: "https://github.com/immois/astro-zen" },
-    { text: "LinkedIn", href: "https://github.com/immois/astro-zen" },
-    { text: "Github", href: "https://github.com/immois/astro-zen" },
-    { text: "Youtube", href: "https://github.com/immois/astro-zen" },
-    { text: "Dribbble", href: "https://github.com/immois/astro-zen" },
+    { text: "Upwork", href: "https://www.upwork.com/freelancers/~016f4dd94b74630944" },
+    { text: "LinkedIn", href: "https://www.linkedin.com/in/otito-ogene-315122201" },
+    { text: "Github", href: "https://github.com/otitodev" }, // change if different
   ],
-  socialImage: "/zen-og.png",
-  canonicalURL: "https://astro-zen.vercel.app",
+  socialImage: "/og-image.png",
+  canonicalURL: "https://personal-site-3xu.pages.dev/", // update if hosting live
 };
 
 export const SITE_CONTENT: SiteContent = {
   hero: {
-    name: "Alejandro Múnez",
-    specialty: "Mobile & Web Developer",
+    name: "Otito Ogene",
+    specialty: "Backend & AI Automation Engineer",
     summary:
-      "Developer based in San Francisco, USA. I specialize in UI design, web and mobile application development and maintenance.",
-    email: "example@email.com",
+      "I architect scalable backend systems, automate workflows, and build data-driven and enterprise solutions.",
+    email: "otitodrichukwu@gmail.com",
   },
+
   experience: [
     {
-      company: "Zalmart",
-      position: "Lead Android Developer",
-      startDate: "May 2018",
-      endDate: "Sept 2020",
+      company: "Techbridge Nigeria",
+      position: "Software Engineer",
+      startDate: "Jan 2025",
+      endDate: "Present",
       summary: [
-        "Implemented advanced memory management and code optimization techniques, resulting in a reduction in application load time by 40% and a decrease in crashes by 25%. This significantly improved user experience and increased user retention by 20%.",
-        "I led a team of developers in building and integrating new features using Jetpack Android components such as LiveData and ViewModel. This enabled us to build scalable and maintainable applications, reducing the crash rate by 20% and speeding up the time to delivery of new features by 15%.",
-        "Integrated Google Pay for in-app purchases, resulting in a 35% increase in mobile transaction revenue. Additionally, implemented Firebase Analytics to gain insights into user behavior, enabling data-driven optimizations and a 30% increase in user retention.",
+        "Engineered scalable backend systems using Python (Django & FastAPI) to support high-volume data workloads.",
+        "Optimized and deployed REST APIs processing 50M+ records monthly, improving reporting speed by 40%.",
+        "Migrated legacy data workflows to AWS Glue and Redshift, cutting infrastructure costs by 25%.",
+        "Collaborated across product teams to ensure seamless integration between services and client applications.",
       ],
     },
     {
-      company: "Bankit",
-      position: "Mobile Developer",
-      startDate: "Feb 2017",
-      endDate: "May 2018",
+      company: "Freelance",
+      position: "Backend & Automation Engineer",
+      startDate: "Nov 2023",
+      endDate: "Present",
       summary: [
-        "I designed and developed a mobile application using Flutter, allowing it to be deployed on both Android and iOS with a single codebase. This reduced development time by 50% and maintenance costs by 30%, facilitating a consistent user experience on both platforms.",
-        "I integrated biometric authentication and data encryption, significantly improving the security of user data. This implementation resulted in a 40% increase in user trust and a 25% reduction in unauthorized access attempts.",
+        "Developed backend architectures for healthcare, AI-driven, and e-commerce platforms.",
+        "Integrated MistralAI, cloud APIs, payment systems, and automated workflows, reducing manual operations by 30%.",
+        "Deployed scalable applications using Docker, Kubernetes, AWS, GCP, and Supabase.",
+        "Designed and optimized data storage using PostgreSQL and MongoDB for performance and reliability.",
       ],
     },
     {
-      company: "Driveer",
-      position: "Frontend Developer",
-      startDate: "Jun 2015",
-      endDate: "Oct 2016",
-      summary:
-        "Developed and integrated a real-time vehicle tracking system using WebSockets, improving accuracy and data update in the application. This functionality increased user satisfaction by 30% and reduced customer service inquiries by 25%.",
+      company: "Hammer Games Nigeria",
+      position: "Software Engineer Intern",
+      startDate: "Mar 2024",
+      endDate: "Oct 2024",
+      summary: [
+        "Built secure RESTful APIs supporting authentication and high-frequency transactions for 50K+ daily users.",
+        "Implemented Redis caching and data pipelines, reducing response time by 35%.",
+        "Collaborated with frontend teams to ship stable features and improve user experience.",
+      ],
     },
   ],
+
   projects: [
     {
-      name: "Spotifu Music",
-      summary: "A music streaming app that emulates Spotify's core features.",
+      name: "Triage AI",
+      summary:
+        "AI-assisted patient triage and clinical decision support system designed for low-resource healthcare facilities.",
       linkPreview: "/",
-      linkSource: "https://github.com/immois/astro-zen",
-      image: "/spotifu.png",
+      linkSource: "https://github.com/otitogene", // replace when repo ready
+      image: "/place_holder.png",
     },
     {
-      name: "Shopp App",
-      summary: "An e-commerce platform that replicates Shopify's key features.",
+      name: "WhatsApp OrderBot Automation",
+      summary:
+        "Automated WhatsApp ordering, customer replies, and inventory updates for small businesses using Make.com & cloud functions.",
       linkPreview: "/",
-      linkSource: "https://github.com/immois/astro-zen",
-      image: "/shopify-clon.png",
+      linkSource: "https://github.com/otitogene",
+      image: "/place_holder.png",
     },
     {
-      name: "ClonTagram",
-      summary: "A social network that replicates the features of Instagram",
+      name: "Property Manager Lite",
+      summary:
+        "Offline-first property and tenant management system tailored for Nigerian landlords and estate caretakers.",
       linkPreview: "/",
-      linkSource: "https://github.com/immois/astro-zen",
-      image: "/clone-ig.png",
+      linkSource: "https://github.com/otitogene",
+      image: "/place_holder.png",
     },
   ],
+
   about: {
     description: `
-      Hi, I’m Alejandro Múnez, a passionate Mobile and Web Developer with a knack for crafting seamless digital experiences. With a strong background in both Android and iOS development, as well as front-end web technologies, I thrive in the intersection where creativity meets technology.
-
-      Over the years, I’ve honed my skills in building robust, user-friendly applications that not only meet the needs of users but also push the boundaries of what’s possible. My projects range from innovative mobile applications to responsive web designs, all with a focus on performance, security, and scalability.
+      I’m a Backend & AI Automation Engineer who enjoys turning complex workflows into simple, scalable systems that just work. I build APIs, automate processes, and deploy cloud-native applications that help businesses run smarter with less manual effort.
+I care a lot about reliability, clarity, and maintainability — software should feel clean and predictable, not chaotic. Whether it’s workflow automation, platform backend architecture, or integrating AI models into real-world systems, I like solving the kinds of problems that make everything run smoother.
+When I’m not writing code, you’ll probably find me playing the piano, watching football, or just exploring new ideas and tools to sharpen my craft.
     `,
-    image: "/alejandro-big.jpg",
+    image: "/otito-big.png",
   },
 };
-
-// #5755ff

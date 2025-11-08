@@ -1,0 +1,99 @@
+---
+import Layout from '@layouts/Layout.astro';
+
+const isDev = import.meta.env.DEV;
+
+// In production, show 404
+if (!isDev) {
+  return Astro.redirect('/404', 404);
+}
+---
+
+<Layout title="Admin Dashboard">
+  <div class="min-h-screen flex items-center justify-center bg-grey-50 px-4">
+    <div class="max-w-2xl w-full bg-white rounded-lg shadow-lg p-8">
+      <div class="text-center mb-8">
+        <h1 class="text-4xl font-bold text-grey-900 mb-2">Admin Dashboard</h1>
+        <p class="text-grey-600">Content Management (Development Only)</p>
+      </div>
+
+      <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+        <p class="text-sm text-blue-800">
+          <strong>Note:</strong> This admin interface is only available in development mode.
+          It will not be accessible on your live site.
+        </p>
+      </div>
+
+      <div class="space-y-4">
+        <div class="border border-grey-200 rounded-lg p-6 hover:border-blue-500 transition-colors">
+          <h2 class="text-xl font-semibold text-grey-900 mb-2">Blog Management</h2>
+          <p class="text-grey-600 mb-4">Create and edit blog posts</p>
+          <div class="flex gap-3">
+            <a
+              href="/admin/blog/new"
+              class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              New Post
+            </a>
+            <a
+              href="/blog"
+              class="px-4 py-2 bg-white border border-grey-300 text-grey-700 rounded-lg hover:bg-grey-50 transition-colors"
+            >
+              View All Posts
+            </a>
+          </div>
+        </div>
+
+        <div class="border border-grey-200 rounded-lg p-6 hover:border-blue-500 transition-colors opacity-50">
+          <h2 class="text-xl font-semibold text-grey-900 mb-2">Project Management</h2>
+          <p class="text-grey-600 mb-4">Create and edit projects (Coming Soon)</p>
+          <div class="flex gap-3">
+            <button
+              disabled
+              class="px-4 py-2 bg-grey-300 text-grey-500 rounded-lg cursor-not-allowed"
+            >
+              New Project
+            </button>
+            <a
+              href="/projects"
+              class="px-4 py-2 bg-white border border-grey-300 text-grey-700 rounded-lg hover:bg-grey-50 transition-colors"
+            >
+              View All Projects
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8 pt-6 border-t border-grey-200">
+        <h3 class="text-lg font-semibold text-grey-900 mb-3">How It Works</h3>
+        <ul class="space-y-2 text-sm text-grey-600">
+          <li class="flex items-start gap-2">
+            <span class="text-blue-600 mt-1">•</span>
+            <span><strong>Development:</strong> Create and edit content using the admin interface</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-blue-600 mt-1">•</span>
+            <span><strong>Files:</strong> Content is saved to <code class="bg-grey-100 px-1 rounded">src/content/</code> as markdown files</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-blue-600 mt-1">•</span>
+            <span><strong>Git:</strong> Commit and push your changes to deploy</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-blue-600 mt-1">•</span>
+            <span><strong>Production:</strong> Visitors see static HTML pages (fast & secure)</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="mt-6 text-center">
+        <a
+          href="/"
+          class="text-blue-600 hover:text-blue-700 text-sm font-medium"
+        >
+          ← Back to Home
+        </a>
+      </div>
+    </div>
+  </div>
+</Layout>

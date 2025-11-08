@@ -2,6 +2,10 @@
 dist/
 
 *.kiro/*
+*summary*
+*start*
+*secutrity*
+*blog_*
 
 # generated types
 .astro/
@@ -24,3 +28,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# uploaded images
+public/uploads/

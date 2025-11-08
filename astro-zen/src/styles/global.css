@@ -45,6 +45,10 @@
   --color-accent-light: var(--color-blue-50);
   --color-accent-hover: var(--color-blue-700);
   
+  /* Theme transition timing */
+  --theme-transition-duration: 300ms;
+  --theme-transition-easing: cubic-bezier(0.4, 0, 0.2, 1);
+  
   /* Background System */
   --color-bg-primary: var(--color-white);
   --color-bg-secondary: var(--color-grey-50);
@@ -571,4 +575,40 @@
 .prose hr {
   border-color: var(--color-border-medium);
   margin: 2rem 0;
+}
+
+/* Dynamic Theme Transitions */
+.theme-transitioning {
+  transition: 
+    --color-accent-primary var(--theme-transition-duration) var(--theme-transition-easing),
+    --color-accent-secondary var(--theme-transition-duration) var(--theme-transition-easing),
+    --color-accent-light var(--theme-transition-duration) var(--theme-transition-easing),
+    --color-accent-hover var(--theme-transition-duration) var(--theme-transition-easing),
+    --color-primary var(--theme-transition-duration) var(--theme-transition-easing),
+    --color-primary-hover var(--theme-transition-duration) var(--theme-transition-easing),
+    --color-primary-light var(--theme-transition-duration) var(--theme-transition-easing);
+}
+
+/* Apply transitions to elements using theme colors */
+.theme-transitioning *,
+.theme-transitioning *::before,
+.theme-transitioning *::after {
+  transition: 
+    color var(--theme-transition-duration) var(--theme-transition-easing),
+    background-color var(--theme-transition-duration) var(--theme-transition-easing),
+    border-color var(--theme-transition-duration) var(--theme-transition-easing),
+    fill var(--theme-transition-duration) var(--theme-transition-easing),
+    stroke var(--theme-transition-duration) var(--theme-transition-easing);
+}
+
+/* Preserve existing transitions during theme change */
+.theme-transitioning .btn-animated,
+.theme-transitioning .card-animated,
+.theme-transitioning .link-animated {
+  transition: 
+    color var(--theme-transition-duration) var(--theme-transition-easing),
+    background-color var(--theme-transition-duration) var(--theme-transition-easing),
+    border-color var(--theme-transition-duration) var(--theme-transition-easing),
+    transform 300ms cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
 }

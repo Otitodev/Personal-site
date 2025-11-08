@@ -1,0 +1,54 @@
+---
+import Layout from '@layouts/Layout.astro';
+import BlogEditor from '@components/editor/BlogEditor';
+
+const title = 'New Blog Post';
+---
+
+<Layout title={title}>
+  <BlogEditor 
+    client:only="react"
+    onSave={async (data) => {
+      const response = await fetch('/api/blog/save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || 'Failed to save blog post');
+      }
+      
+      const result = await response.json();
+      window.location.href = `/blog/${result.slug}`;
+    }}
+    onImageUpload={async (file) => {
+      const formData = new FormData();
+      formData.append('image', file);
+      
+      const response = await fetch('/api/upload/image', {
+        method: 'POST',
+        body: formData,
+      });
+      
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || 'Failed to upload image');
+      }
+      
+      const result = await response.json();
+      return result.url;
+    }}
+    onCancel={() => {
+      window.location.href = '/admin/blog';
+    }}
+  />
+</Layout>
+
+<style>
+  /* Remove default layout padding for full-screen editor */
+  :global(body) {
+    overflow: hidden;
+  }
+</style>

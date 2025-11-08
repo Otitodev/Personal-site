@@ -1,0 +1,175 @@
+---
+import Layout from '@layouts/Layout.astro';
+import ThemeImage from '@components/ThemeImage.astro';
+
+const title = 'Dynamic Theme Demo';
+const description = 'Demonstration of image-based dynamic theming';
+---
+
+<Layout title={title} description={description}>
+  <main class="container mx-auto px-4 py-12 max-w-4xl">
+    <h1 class="text-4xl font-bold mb-8" style="color: var(--color-text-primary)">
+      Dynamic Theme Demo
+    </h1>
+
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold mb-4" style="color: var(--color-text-primary)">
+        How It Works
+      </h2>
+      <p class="mb-4" style="color: var(--color-text-secondary)">
+        This page demonstrates the dynamic theming system. Images marked with <code>data-theme-source</code>
+        will automatically extract their dominant colors and update the site's accent colors while maintaining
+        the white/grey base theme and ensuring accessibility compliance.
+      </p>
+    </section>
+
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold mb-4" style="color: var(--color-text-primary)">
+        Theme-Enabled Image
+      </h2>
+      <p class="mb-4" style="color: var(--color-text-secondary)">
+        The image below will influence the theme colors. Notice how the buttons and links below
+        adapt their colors based on the image.
+      </p>
+      
+      <div class="mb-8 rounded-lg overflow-hidden border" style="border-color: var(--color-border-light)">
+        <ThemeImage
+          src="https://images.unsplash.com/photo-1557683316-973673baf926?w=800&h=400&fit=crop"
+          alt="Gradient background"
+          enableTheme={true}
+          class="w-full h-64 object-cover"
+        />
+      </div>
+
+      <div class="flex gap-4 flex-wrap mb-8">
+        <button 
+          class="btn-animated px-6 py-3 rounded-lg font-semibold"
+          style="background-color: var(--color-accent-primary); color: white;"
+        >
+          Primary Button
+        </button>
+        <button 
+          class="btn-animated px-6 py-3 rounded-lg font-semibold"
+          style="background-color: var(--color-accent-secondary); color: white;"
+        >
+          Secondary Button
+        </button>
+        <button 
+          class="btn-animated px-6 py-3 rounded-lg font-semibold border-2"
+          style="border-color: var(--color-accent-primary); color: var(--color-accent-primary);"
+        >
+          Outline Button
+        </button>
+      </div>
+
+      <div class="prose">
+        <p>
+          Here's a <a href="#" class="link-animated" style="color: var(--color-accent-primary)">themed link</a> 
+          that uses the accent color. The theme system ensures all colors meet WCAG AA accessibility standards.
+        </p>
+      </div>
+    </section>
+
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold mb-4" style="color: var(--color-text-primary)">
+        Try Different Images
+      </h2>
+      <p class="mb-4" style="color: var(--color-text-secondary)">
+        Click on any image below to see how the theme adapts to different color palettes:
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <button 
+          class="card-animated rounded-lg overflow-hidden border cursor-pointer"
+          style="border-color: var(--color-border-light)"
+          onclick="applyThemeFromUrl('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=400&h=300&fit=crop')"
+        >
+          <img 
+            src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=400&h=300&fit=crop"
+            alt="Blue gradient"
+            class="w-full h-48 object-cover"
+          />
+          <div class="p-4">
+            <p class="font-semibold" style="color: var(--color-text-primary)">Blue Theme</p>
+          </div>
+        </button>
+
+        <button 
+          class="card-animated rounded-lg overflow-hidden border cursor-pointer"
+          style="border-color: var(--color-border-light)"
+          onclick="applyThemeFromUrl('https://images.unsplash.com/photo-1557682250-33bd709cbe85?w=400&h=300&fit=crop')"
+        >
+          <img 
+            src="https://images.unsplash.com/photo-1557682250-33bd709cbe85?w=400&h=300&fit=crop"
+            alt="Orange gradient"
+            class="w-full h-48 object-cover"
+          />
+          <div class="p-4">
+            <p class="font-semibold" style="color: var(--color-text-primary)">Orange Theme</p>
+          </div>
+        </button>
+
+        <button 
+          class="card-animated rounded-lg overflow-hidden border cursor-pointer"
+          style="border-color: var(--color-border-light)"
+          onclick="applyThemeFromUrl('https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?w=400&h=300&fit=crop')"
+        >
+          <img 
+            src="https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?w=400&h=300&fit=crop"
+            alt="Purple gradient"
+            class="w-full h-48 object-cover"
+          />
+          <div class="p-4">
+            <p class="font-semibold" style="color: var(--color-text-primary)">Purple Theme</p>
+          </div>
+        </button>
+      </div>
+    </section>
+
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold mb-4" style="color: var(--color-text-primary)">
+        Reset Theme
+      </h2>
+      <button 
+        class="btn-animated px-6 py-3 rounded-lg font-semibold"
+        style="background-color: var(--color-grey-600); color: white;"
+        onclick="resetToDefault()"
+      >
+        Reset to Default Blue Theme
+      </button>
+    </section>
+
+    <section class="mb-12 p-6 rounded-lg" style="background-color: var(--color-accent-light)">
+      <h2 class="text-2xl font-semibold mb-4" style="color: var(--color-text-primary)">
+        Accessibility Compliance
+      </h2>
+      <p style="color: var(--color-text-secondary)">
+        All generated theme colors are automatically validated to meet WCAG 2.1 AA standards
+        for contrast ratios. Colors that don't meet the minimum 4.5:1 ratio are automatically
+        adjusted to ensure readability.
+      </p>
+    </section>
+  </main>
+</Layout>
+
+<script>
+  import { applyThemeFromImage, resetTheme } from '../lib/theme-manager';
+
+  // Make functions available globally for onclick handlers
+  (window as any).applyThemeFromUrl = async (url: string) => {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.src = url;
+    
+    await new Promise((resolve, reject) => {
+      img.onload = resolve;
+      img.onerror = reject;
+    });
+    
+    await applyThemeFromImage(img);
+  };
+
+  (window as any).resetToDefault = async () => {
+    await resetTheme();
+  };
+</script>

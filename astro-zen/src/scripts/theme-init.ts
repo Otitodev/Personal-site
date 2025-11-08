@@ -1,21 +1,27 @@
 /**
- * Theme initialization script
- * Initializes the enhanced theme system on page load
+ * Theme System Initialization Script
+ * Automatically detects and applies themes from hero images
  */
 
-import { enableThemeTransitions, getCurrentTheme } from '@lib/theme';
+import { initializeThemeSystem } from '../lib/theme-manager';
 
-// Initialize theme system when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-  // Enable smooth transitions for theme changes
-  enableThemeTransitions();
-  
-  // Log current theme state for debugging
-  if (import.meta.env.DEV) {
-    const currentTheme = getCurrentTheme();
-    console.log('Theme system initialized:', currentTheme);
-  }
+// Initialize theme system when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initTheme);
+} else {
+  initTheme();
+}
+
+function initTheme() {
+  // Initialize with default options
+  initializeThemeSystem({
+    autoDetect: true,
+    selector: 'img[data-theme-source]',
+    transitionDuration: 300
+  });
+}
+
+// Re-initialize on page navigation (for SPAs or View Transitions)
+document.addEventListener('astro:page-load', () => {
+  initTheme();
 });
-
-// Export for potential use in other scripts
-export { enableThemeTransitions, getCurrentTheme };

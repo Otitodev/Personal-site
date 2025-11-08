@@ -6,10 +6,17 @@ import Experience from "@components/Experience.astro";
 import Projects from "@components/Projects.astro";
 import About from "@components/About.astro";
 import ScrollReveal from "@components/ScrollReveal.astro";
+import { StarsBackground } from "@/components/animate-ui/components/backgrounds/stars";
 ---
 
 <Layout>
-  <Hero {...SITE_CONTENT.hero} />
+  <div class="-mx-5 -mt-24 md:-mt-32 mb-12">
+    <StarsBackground client:load className="min-h-[600px] md:min-h-[700px]" starColor="#60a5fa" speed={60} factor={0.03}>
+      <div class="relative z-10 max-w-3xl mx-auto px-5">
+        <Hero {...SITE_CONTENT.hero} />
+      </div>
+    </StarsBackground>
+  </div>
   
   <ScrollReveal animation="fade" delay={200}>
     <Experience experience={SITE_CONTENT.experience} />
